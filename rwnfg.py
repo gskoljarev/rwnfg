@@ -1,8 +1,13 @@
 #!/usr/bin/python
 
 import datetime
+import iso8601
 import requests
-from rfeed import *
+from feedgen.feed import FeedGenerator
+
+fg = FeedGenerator()
+fg.load_extension('podcast')
+fg.podcast.itunes_category('Technology', 'Podcasting')
 
 r = requests.get('https://api.patreon.com/campaigns/157274/posts?filter[is_by_creator]=true&page[count]=100')
 
@@ -12,23 +17,17 @@ entry_list = []
 
 for post in patreon_posts['data']:
     if post['post_type'] == 'audio_file':
-	item = Item(
-	    title = post['title'],
-	    link = post['post_file']['url'], 
-	    description = post['content'],
-	    author = "Santiago L. Valdarrama",
-	    guid = Guid(post['post_file']['url']),
-	)
-	entry_list.append(item)
+	fe = fg.add_entry()
+	fe.id(post['post_file']['url'])
+ 	fe.title(post['title'])
+ 	fe.description(post['content'])
+ 	fe.enclosure(post['post_file']['url'], 0, 'audio/mpeg')
+	fe.pubdate(iso8601.parse_date(post['published_at']))
 
-feed = Feed(
-    title = "Radio War Nerd",
-    link = "http://www.example.com/rss",
-    description = "This is an example of how to use rfeed to generate an RSS 2.0 feed",
-    language = "en-US",
-    lastBuildDate = datetime.datetime.now(),
-    items = entry_list
-)
-
-with open('radio_war_nerd.rss', 'w+') as the_file:
-	the_file.write(feed.rss())
+fg.title('Radio War Nerd')
+fg.link({
+	'href': 'https://www.patreon.com/radiowarnerd'
+})
+fg.description("The War Nerd Podcast")
+fg.rss_str(pretty=True)
+fg.rss_file('rwn.xml')
