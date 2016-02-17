@@ -1,1 +1,3 @@
 requests==2.9.1
+feedgen==0.3.2
+iso8601==0.1.11
