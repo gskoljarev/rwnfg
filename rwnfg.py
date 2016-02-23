@@ -5,6 +5,16 @@ import iso8601
 import requests
 from feedgen.feed import FeedGenerator
 
+
+def insert_paris_attacks_episode(fg):
+	fe = fg.add_entry()
+	fe.id('http://exiledonline.com/wnradio/Radio-War-Nerd-Special-Paris-Attacks.mp3')
+	fe.title('Radio War Nerd, Special Episode -November 16, 2015')
+	fe.description('Special edition of Radio War Nerd on the Paris ISIS attacks')
+	fe.enclosure('http://exiledonline.com/wnradio/Radio-War-Nerd-Special-Paris-Attacks.mp3', 0, 'audio/mpeg')
+	fe.pubdate(iso8601.parse_date('2015-11-16T12:00:00+00:00'))
+
+
 fg = FeedGenerator()
 fg.load_extension('podcast')
 fg.podcast.itunes_category('Technology', 'Podcasting')
@@ -17,6 +27,10 @@ entry_list = []
 
 for post in patreon_posts['data']:
     if post['post_type'] == 'audio_file':
+	# insert Paris attacks special episode
+	if post['published_at'] == '2015-11-15T07:06:53+00:00':
+		insert_paris_attacks_episode(fg)
+
 	fe = fg.add_entry()
 	fe.id(post['post_file']['url'])
  	fe.title(post['title'])
