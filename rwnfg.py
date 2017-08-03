@@ -24,8 +24,9 @@ patreon_posts = r.json()
 
 entry_list = []
 
-for post in patreon_posts['data']:
-    if post['post_type'] == 'audio_file' and post['post_file']is not None:
+for data in patreon_posts['data']:
+    post = data['attributes']
+    if post['post_type'] == 'audio_file' and post['post_file'] is not None:
         # insert Paris attacks special episode
         if post['published_at'] == '2015-11-15T07:06:53+00:00':
             insert_paris_attacks_episode(fg)
