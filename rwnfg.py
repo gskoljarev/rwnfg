@@ -42,7 +42,7 @@ fg.title('Radio War Nerd')
 fg.podcast.itunes_author('Gary Brecher')
 fg.link({'href': 'https://www.patreon.com/radiowarnerd'})
 fg.description("The War Nerd Podcast")
-fg.logo('https://c10.patreon.com/3/eyJ3Ijo0MDB9/patreon-user/n4H3wobwI3jPQ5ZY5vPlYLmFgn7NZq6K6IbNEI5DvpFYMlozBQB33OZF1kHCjk4y_large_2.jpeg?token-time=2145916800&token-hash=ScHYE7uDDc6w7HeFV1b33guW7-sHpbKVT84yR-HXwJI%3D')
+fg.logo('https://pbs.twimg.com/profile_images/2677603950/8320ad7218821615d8a87d53f23fae11.jpeg')
 
 fg.rss_str(pretty=True)
 fg.rss_file('rwn.xml')
